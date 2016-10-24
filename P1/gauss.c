@@ -1,9 +1,10 @@
-i#include<stdio.h>
+#include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
 int resoltrisup(int, double**, double*, double*, double);
 void prodMatVec(int,double**,double*,double*);
 double norma2(int, double*);
+int gauss(int, double**, double*, double);
 int main(void){
 	int n, i, j;
 	double tol=1.0E-3;	
@@ -39,10 +40,10 @@ int main(void){
 		for(j = 0; j < n; j++){
 			scanf("%le", &A[i][j]);
 		}
-	}
+	}	
 	printf("Doneu els %d elements del vector b \n", n);
 	for(i = 0; i < n; i++)scanf("%le", &b[i]);
-	if(resoltrisup(n,A,b,x,tol)==0){
+	if(gauss(n,A,b,tol)==0){
 		printf("( ");
 		for(i=0;i<n;i++)printf("%2.2f ", x[i]);
 		printf(")\n");
@@ -56,18 +57,29 @@ int main(void){
 }
 
 int gauss(int n, double **A, double *v, double tol){
-	int i,j;
+	int i,j,k;
 	double temp;
-	for(i=0;i<n;i++){
-		if(fabs(A[i][j])<tol){
-			return 1;
-		}else if(fabs(A[i+1][j])>=tol){
-			temp=A[i+1][j]/A[i];
-			for(j=i;j<n;j++){
-				
+	for(k=0;k<n-1;k++){
+		for(i=k+1;i<n;i++){
+			if(fabs(A[k][k])<tol){
+				return 1;
+			}else{
+				temp=A[i][k]/A[k][k];
+				for(j=k;j<n;j++){
+					A[i][j]-=A[k][j]*temp;
+				}
 			}
 		}
 	}
+	for(i=0;i<n;i++){
+     		for(j=0;j<n;j++){
+                	printf(" %2.2e ",A[i][j]);
+               	}
+		printf("\n");
+        }               
+                    
+
+	return 0;
 }
 
 int resoltrisup(int n, double **A, double *b, double *x, double tol){
