@@ -90,5 +90,5 @@ double norma2(int n, double *z){
 	for(i=0;i<n;i++){
 		norma+=pow(z[i],2);
 	}
-	return norma;
+	return sqrt(norma);
 }
