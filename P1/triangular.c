@@ -48,7 +48,7 @@ int main(void){
 		printf(")\n");
 		prodMatVec(n,A,x,y);
 		for(i=0;i<n;i++)z[i]=y[i]-b[i];
-		printf("La norma es igual a %e\n",norma2(n,z));		
+		printf("La norma es igual a %f\n",norma2(n,z));		
 	}else{
 		printf("No hi ha solució\n");
 	}
@@ -59,16 +59,13 @@ int resoltrisup(int n, double **A, double *b, double *x, double tol){
 	int i, j;
 	for(i=n-1;i>=0;i--){
 		x[i]=b[i];
-		for(j=n-1;j!=i;j--){
-			x[i]-=(A[i][j]*x[j]);
-		}
 		if(fabs(A[i][i])<tol){
 			return 1;
 		}else{
-			for(j=n-1;j!=i;j--){
-	                        x[i]-=(A[i][j]*x[j]);
+			for(j=n-1;j>i;j--){
+				x[i]-=(A[i][j]*x[j]);
 	                }
-			x[i]=x[i]/A[i][i];
+			x[i]/=A[i][i];
 		}
 	}
 	return 0;

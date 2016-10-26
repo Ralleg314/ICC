@@ -4,7 +4,7 @@
 int resoltrisup(int, double**, double*, double*, double);
 void prodMatVec(int,double**,double*,double*);
 double norma2(int, double*);
-int gauss(int, double**, double*, double);
+int gausspivot(int, double**, double*, double);
 int main(void){
 	int n, i, j;
 	double tol=1.0E-3;	
@@ -43,7 +43,7 @@ int main(void){
 	}	
 	printf("Doneu els %d elements del vector b \n", n);
 	for(i = 0; i < n; i++)scanf("%le", &b[i]);
-	if(gauss(n,A,b,tol)==0){
+	if(gausspivot(n,A,b,tol)==0){
 		printf("( ");
 		for(i=0;i<n;i++)printf("%2.2f ", x[i]);
 		printf(")\n");
@@ -56,10 +56,22 @@ int main(void){
 	return 0;
 }
 
-int gauss(int n, double **A, double *v, double tol){
-	int i,j,k;
-	double temp;
+int gausspivot(int n, double **A, double *v, double tol){
+	int i,j,k, maxpos;
+	double temp, max;
 	for(k=0;k<n-1;k++){
+		max=-1.0/0.0;
+		for(i=k;i<n;i++){
+			if(A[i][k]>max){
+				max=A[i][k];
+				maxpos=i;
+			}
+		}
+		for(i=k;i<n;i++){
+			temp=A[k][i];
+			A[k][i]=A[maxpos][i];
+			A[maxpos][i]=temp;
+		} 
 		for(i=k+1;i<n;i++){
 			if(fabs(A[k][k])<tol){
 				return 1;
