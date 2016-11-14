@@ -65,6 +65,7 @@ double determinant(int n, double **A, double tol){
 				}
 			}
 		}
+		maxpos=-1;
 	}             
 	for(i=0;i<n;i++){
 		det*=A[i][i];
