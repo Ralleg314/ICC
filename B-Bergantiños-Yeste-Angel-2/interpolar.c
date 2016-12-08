@@ -11,8 +11,7 @@ double f(double);
 
 int main(void){
 	int i, n;
-	double *x, *y, step;
-	printf("Introdueix la dimensio: ");
+	double *x, *y, step, t, fx, px, er;
 	scanf("%d",&n);
 	x=(double*)malloc((n+1)*sizeof(double));
 	y=(double*)malloc((n+1)*sizeof(double));
@@ -25,7 +24,14 @@ int main(void){
 		y[i]=f(x[i]);
 	}
 	dif_dividides(x,y,n);
-	printf("Pol: %e\nf(t): %e\n", aval(x,y,n,x[0]), f(x[0]));
+	step=2*PI/1000;
+	for(i=0;i<1000;i++){
+		t=i*step;
+		fx=f(t);
+		px=aval(x,y,n,t);
+		er=(px-fx)/fx;
+		printf("%e %e %e %e\n", t,fx,px,er);
+	}
 	return 0;
 }
 
