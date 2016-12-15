@@ -7,7 +7,7 @@ double datajuliana(int,int,int);
 
 int main(void){
 	int i=0,j, n[4]={6,9,12,15},nb=5,dia,mes,pos;
-	double *temps, *x, *y, *z,*subt,*subx,*suby,*subz,test=2462225.5,data;
+	double *temps, *x, *y, *z,*subt,*subx,*suby,*subz,test=2462225.5,data,avalx,avaly,avalz;
 	FILE *fin;
 	fin=fopen("dades_apophis.dat","r");
 	if(fin==NULL){
@@ -89,7 +89,11 @@ int main(void){
 	}
 	printf("**********************\n");
 	data+=60;
-	printf("t=%.1f x=%+.8e y=%+.8e z=%+.8e\n",data, aval(subt,subx,nb,data),aval(subt,suby,nb,data),aval(subt,subz,nb,data));
+	avalx=aval(subt,subx,nb,data);
+	avaly=aval(subt,suby,nb,data);
+	avalz=aval(subt,subz,nb,data);
+	printf("t=%.1f x=%+.8e y=%+.8e z=%+.8e\n",data, avalx,avaly,avalz);
+	printf("La distancia al sol es %.12e UA\n",sqrt(pow(avalx,2)+pow(avaly,2)+pow(avalz,2)));
 	free(temps);
 	free(x);
 	free(y);
@@ -105,8 +109,8 @@ double datajuliana(int dia,int mes,int any){
 	int a,m,y;
 	double D;
 	a=(14-mes)/12;
-	m=mes-12*a-3;
+	m=mes+12*a-3;
 	y=any+4800-a;
-	D=dia+(153.*m+2.)/5.+365.*y+(y/4.)-(y/100.)+(y/400.)-32045;
+	D=dia+(153*m+2)/5+365*y+(y/4)-(y/100)+(y/400)-32045-0.5;
 	return D;
 }
