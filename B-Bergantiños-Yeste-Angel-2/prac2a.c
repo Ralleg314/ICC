@@ -1,3 +1,7 @@
+/*COGNOM1:Bergantiños 
+COGNOM2: Yeste
+NOM: Angel
+DNI: 46722842K*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
